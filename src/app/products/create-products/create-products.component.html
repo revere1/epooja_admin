@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <form [formGroup]="productForm" (ngSubmit)="saveProduct()">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <b>Add Product Form</b>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <span class="text-muted">
+            <em>
+              <span style="color:red;">*</span> Indicates required field</em>
+          </span>
+        </div>
+        <!-- Product Name -->
+        <div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name">Product Name
+                <span style="color:red;">*</span>
+              </label>
+              <input id="name" type="text" class="form-control" formControlName="name">
+              <span *ngIf="formErrors.name" class="small text-danger formErrors" [innerHTML]="formErrors.name">
+              </span>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="description">Product Description:</label>
+                <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> -->
+                <textarea id="description" class="form-control" formControlName="description"></textarea>
+                <div *ngIf="formErrors.description" class="small text-danger formErrors" [innerHTML]="formErrors.description">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name">Quantity
+                <span style="color:red;">*</span>
+              </label>
+              <input id="name" type="text" class="form-control" formControlName="quantity">
+              <span *ngIf="formErrors.name" class="small text-danger formErrors" [innerHTML]="formErrors.name">
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="name">Cost
+                <span style="color:red;">*</span>
+              </label>
+              <input id="name" type="text" class="form-control" formControlName="cost">
+              <span *ngIf="formErrors.name" class="small text-danger formErrors" [innerHTML]="formErrors.name">
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Product Images:</label>
+                <dropzone [config]="config" [message]="'Click or drag images here to upload'" (success)="onUploadSuccess($event)"
+                  (error)="onUploadError($event)">
+                </dropzone>
+                <div *ngIf="formErrors.files" class="small text-danger formErrors" [innerHTML]="formErrors.files">
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Sector Status -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="sector">Status
+                <span style="color:red;">*</span>
+              </label>
+              <select id="status" class="form-control" formControlName="status">
+                <option value=null selected>Select</option>
+                <option>active</option>
+                <option>Inactive</option>
+              </select>
+              <div *ngIf="formErrors.status" class="small text-danger formErrors" [innerHTML]="formErrors.status">
+              </div>
+            </div>
+            <br>
+            <!-- Submit -->
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary" [attr.disabled]="productForm.invalid || submitting ? true : null" [innerText]="submitBtnText"></button>
+              <!-- <app-submitting *ngIf="submitting"></app-submitting> -->
+              <a *ngIf="!submitting" class="btn btn-link" (click)="resetForm()" tabindex="0">Reset Form</a>
+              <!-- API submission error -->
+              <p *ngIf="error" class="mt-3 alert alert-danger">
+                <strong>Error:</strong> There was a problem submitting the form. Please try again.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </form>
+</div>
