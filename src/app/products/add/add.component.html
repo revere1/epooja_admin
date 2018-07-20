@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-header">Input text masks</div>
+  <div class="card-block row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <form class="form-horizontal" novalidate>
+            <div class="form-group row" [ngClass]="{'has-danger': pname?.errors?.pname}">
+              <label class="col-2 col-form-label">Product Name</label>
+              <div class="col-10">
+                <input class="form-control" 
+                       type="text" 
+                       ngModel               
+                       name="pname" 
+                       #pname="ngModel" 
+                       minlength="5"
+                       required  
+                       [ngClass]="{'form-control-danger': pname?.errors?.pname}"/>
+                <div class="form-control-feedback" *ngIf="pname?.errors?.pname">
+                  Product name atleast 5 chars
+                </div>
+              </div>
+            </div>
+      
+            <div class="form-group row" [ngClass]="{'has-danger': minlength?.errors?.minlength}">
+              <label class="col-2 col-form-label">Product Description</label>
+              <div class="col-10">
+                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+               </div>
+            </div>      
+      
+            <!-- <div class="form-group row" [ngClass]="{'has-danger': pattern?.errors?.pattern}">
+              <label class="col-2 col-form-label">pattern</label>
+              <div class="col-10">
+                <input class="form-control" type="text" ngModel name="pattern" #pattern="ngModel" pattern="[a-z]{6}" [ngClass]="{'form-control-danger': pattern?.errors?.pattern}"/>
+                <div class="form-control-feedback" *ngIf="pattern?.errors?.pattern">pattern error</div>
+              </div>
+            </div> -->
+      
+            <div class="form-group row" [ngClass]="{'has-danger': rangeLength?.errors?.rangeLength}">
+              <label class="col-2 col-form-label">Cost</label>
+              <div class="col-10">
+                <input class="form-control" type="text" ngModel name="cost" #rangeLength="ngModel" [rangeLength]="[1,7]" [ngClass]="{'form-control-danger': rangeLength?.errors?.rangeLength}"/>
+                <div class="form-control-feedback" *ngIf="rangeLength?.errors?.rangeLength">rangeLength error</div>
+              </div>
+            </div>   
+            <div class="form-group row" [ngClass]="{'has-danger': rangeLength?.errors?.rangeLength}">
+                <label class="col-2 col-form-label">Quantity</label>
+                <div class="col-10">
+                  <input class="form-control" type="text" ngModel name="quantity" #rangeLength="ngModel" [rangeLength]="[1,7]" [ngClass]="{'form-control-danger': rangeLength?.errors?.rangeLength}"/>
+                  <div class="form-control-feedback" *ngIf="rangeLength?.errors?.rangeLength">rangeLength error</div>
+                </div>
+              </div>  
+              <div class="form-group row">
+                  <label class="col-2 col-form-label">Status</label>
+                  <div class="col-10">
+                  <select class="form-control" id="exampleSelect2">
+                    <option value=""><Select> Status</Select></option>
+                    <option value="0">Active</option>
+                    <option value="1">Deactive</option>
+                   
+                  </select>
+                </div>
+                </div> 
+                <div class="form-group row">
+                  <label class="col-2 col-form-label">Product Image</label>
+                  <label class="custom-file col-10">
+                    <input type="file" id="file" class="custom-file-input">
+                    <span class="custom-file-control"></span>
+                  </label>
+                </div>
+          </form>
+    </div>
+    <div class="col-2"></div>
+   
+  </div>
+</div>

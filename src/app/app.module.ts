@@ -9,6 +9,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarModule } from 'ng-sidebar';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
@@ -45,7 +46,8 @@ export function createTranslateLoader(http: Http) {
       }
     }),
     NgbModule.forRoot(),
-    SidebarModule.forRoot()
+    SidebarModule.forRoot(),
+    NgxDatatableModule
   ],
   providers: [
   

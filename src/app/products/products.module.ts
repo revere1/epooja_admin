@@ -3,28 +3,15 @@ import { CommonModule } from '@angular/common';
 import { ProductsRoutingModule } from './products-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductsComponent } from './products.component';
-import { CreateProductsComponent } from './create-products/create-products.component';
-import { ScriptService } from '../services/script.service';
-//import { SectorsService } from '../services/sectors.service';
-import { ProductFormService } from '../services/products/product-form.service';
-import { ProductsService } from '../services/products.service';
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
-
+import { AddComponent } from './add/add.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,
     ProductsRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DropzoneModule,
-  ],
-  declarations: [ProductsComponent, CreateProductsComponent],
-  providers: [
-    ScriptService,
-    ProductsService,
-    ProductFormService,
- 
+    SharedModule
     
-  ]
+  ],
+  declarations: [ProductsComponent, AddComponent]
 })
 export class ProductsModule { }

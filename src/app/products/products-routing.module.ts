@@ -2,22 +2,28 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductsComponent } from './products.component';
 import { CreateProductsComponent } from './create-products/create-products.component';
+import { AddComponent } from './add/add.component';
 
 export const ProductsRoutes: Routes = [{
   path: '',
-  component: ProductsComponent,
+  children: [{
+    path: '',
+    component: ProductsComponent,
   data: {
     heading: 'Products'
-  }
-},
-{
-  path: 'create', component: CreateProductsComponent,
-  data: {
-    breadcrumb: 'Create'
-  }
-},
-
-];
+   }
+  },
+  {
+    path: 'add',
+    component: AddComponent,
+    data: {
+      heading: 'Add Product'
+    }
+  }]
+  
+  
+  
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(ProductsRoutes)],
