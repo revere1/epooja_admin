@@ -25,31 +25,31 @@ const MENUITEMS = [
     state: 'dashboard',
     name: 'HOME',
     type: 'link',
-    icon: 'icon-basic-accelerator'
+    icon: 'icon icon-basic-accelerator'
   },
   {
     state: 'categories',
     name: 'Categories',
     type: 'link',
-    icon: 'icon-basic-accelerator'
+    icon: 'icon icon-basic-sheet-txt'
   },
   {
     state: 'products',
     name: 'Products',
     type: 'link',
-    icon: 'fab fa-product-hunt'
+    icon: 'icon icon-arrows-squares'
   },
   {
     state: 'orders',
     name: 'Orders',
     type: 'link',
-    icon: 'icon-basic-hammer'
+    icon: 'icon icon-basic-hammer'
   },
   {
     state: 'users',
     name: 'Users',
     type: 'link',
-    icon: 'fas fa-users'
+    icon: 'icon icon-software-magnete'
   }        
       
   

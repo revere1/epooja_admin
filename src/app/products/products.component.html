@@ -1,3 +1,39 @@
-<p>
-  products works!
-</p>
+
+  <a [routerLink]="['/products/add/']" class="btn btn-primary mr-1 mb-1" style="float:right;"><i class="icon icon-arrows-circle-plus"></i></a>
+<ngx-datatable
+[columnMode]="'force'"
+[headerHeight]="40"
+[footerHeight]="0"
+[rowHeight]="40"
+[scrollbarV]="true"
+[scrollbarH]="true"
+[rows]="rows">
+  <ngx-datatable-column
+    name="Image"
+    [width]="100"
+    [frozenLeft]="true">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Product"
+    [width]="100"
+    prop="address.city">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Description"
+    [width]="300"
+    prop="address.city">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Quantity">
+  </ngx-datatable-column>
+  <ngx-datatable-column
+    name="Cost">
+  </ngx-datatable-column>
+  
+  <ngx-datatable-column
+    name="Actions"
+    [width]="300"
+    prop="address.state"
+    [frozenRight]="true">
+  </ngx-datatable-column>
+</ngx-datatable>
