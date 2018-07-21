@@ -1,93 +1,46 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 //import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { ENV } from '../env.config';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
-import { ProductModel } from '../models/product.model';
-
+import { ProductModel } from './../models/product.model';
+import { Http, Response, ResponseOptions } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/toPromise';
+import { ENV } from '../env.config';
 @Injectable()
 export class ProductsService {
 
-  private currentUser : any;
-  constructor(private router: Router) { }
-  private get _authHeader(): string {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return this.currentUser.token;
+  private currentUser: any;
+  url = "http://localhost:1332/v1/products";
+
+  constructor(private http: Http, private router: Router) { }
+
+  getProductsWithPromise(): Promise<ProductModel[]> {
+    return this.http.get(this.url).toPromise()
+    .then(this.extractData)
+          .catch(this.handleErrorPromise);
+}
+addProductWithObservable(event: ProductModel): Observable<ProductModel> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.url, event, options)
+      .map(this.extractData)
+      .catch(this.handleErrorObservable);
+
   }
-
-  public getToken(): string {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    return this.currentUser.token;
+  private extractData(res: Response) {
+    let body = res.json();
+    return body || {};
   }
-  
-  // removeFile(file){
-  //   return this.http
-  //     .delete(`${ENV.BASE_API}problems/remove-file`, {
-  //       headers: new HttpHeaders()
-  //                 .set('Authorization', this._authHeader)
-  //                 .set('file', file)
-  //     })
-  //     .catch(this._handleError);
-  // }
-  // POST new event (admin only)
-  // getSector$() {
-  //   return this.http
-  //     .get(`${ENV.BASE_API}sectors`, {
-  //       headers: new HttpHeaders().set('authorization', this._authHeader)
-  //     })
-  //     .catch(this._handleError);
-  // }
-
-  // POST new event (admin only)
-  // filterSectors$(filterInput,endPoint) {
-  //   return this.http
-  //     .post(`${ENV.BASE_API}${endPoint}`, filterInput, {
-  //       headers: new HttpHeaders().set('authorization', this._authHeader)
-  //     })
-  //     .catch(this._handleError);
-  // }
-
-  // deleteSectorById$(id:number):Observable<number>{
-  //   return this.http
-  //   .delete(`${ENV.BASE_API}sectors/${id}`, {
-  //     headers: new HttpHeaders().set('authorization', this._authHeader)
-  //   })
-  //   .catch(this._handleError);
-  // }
-   // POST new event (admin only)
-  //  postEvent$(event: SectorModel): Observable<SectorModel> {
-  //   return this.http
-  //     .post(`${ENV.BASE_API}sectors`, event, {
-  //       headers: new HttpHeaders().set('authorization', this._authHeader)
-  //     })
-  //     .catch(this._handleError);
-  // }
-
-  // PUT existing event (admin only)
-  // editEvent$(id: number, event: SectorModel): Observable<SectorModel> {    
-  //   return this.http
-  //     .put(`${ENV.BASE_API}sectors/${id}`, event, {
-  //       headers: new HttpHeaders().set('Authorization', this._authHeader)
-  //     })
-  //     .catch(this._handleError);
-  // }
-  // POST new event (admin only)
-  //getSectorById$(id: number): Observable<SectorModel> {
-  //   getSectorById$(id: number){
-  //   return this.http
-  //     .get(`${ENV.BASE_API}sectors/${id}`, {
-  //       headers: new HttpHeaders().set('Authorization', this._authHeader)
-  //     })
-  //     .catch(this._handleError);
-  // }
-
-
-  // private _handleError(err: HttpErrorResponse | any) {
-  //   const errorMsg = err.message || 'Error: Unable to complete request.';
-  //   if (err.message && err.message.indexOf('No JWT present') > -1) {
-  //     this.router.navigate(['/auth/login']);
-  //   }
-  //   return Observable.throw(errorMsg);
-  // }
+  private handleErrorObservable(error: Response | any) {
+    console.error(error.message || error);
+    return Observable.throw(error.message || error);
+  }
+  private handleErrorPromise(error: Response | any) {
+    console.error(error.message || error);
+    return Promise.reject(error.message || error);
+  }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild, HostListener, AnimationTransit
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';

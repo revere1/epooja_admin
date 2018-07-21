@@ -38,6 +38,7 @@ export function createTranslateLoader(http: Http) {
     FormsModule,
     //HttpClientModule,
     HttpModule,
+  
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

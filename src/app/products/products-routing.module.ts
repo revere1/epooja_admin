@@ -15,7 +15,7 @@ export const ProductsRoutes: Routes = [{
   },
   {
     path: 'add',
-    component: AddComponent,
+    component: CreateProductsComponent,
     data: {
       heading: 'Add Product'
     }

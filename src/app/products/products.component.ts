@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductsService } from '../services/products.service';
+import { ProductModel } from '../models/product.model';
 
 @Component({
   selector: 'app-products',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
   rows = [];
-  constructor() { }
+  books: ProductModel[];
+  errorMessage: String;
+  constructor(
+    private _productsService: ProductsService,
+  ) { }
 
   ngOnInit() {
+    this.fetchBooks();
+    console.log(this.fetchBooks())
   }
-
+  fetchBooks(): void {
+    this._productsService.getProductsWithPromise()
+      .then( productss => this.books = productss,
+             error =>  this.errorMessage = <any>error);   
+}
 }

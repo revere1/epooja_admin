@@ -1,6 +1,6 @@
 class ProductModel {
     constructor(
-      public name: string,
+      public productname: string,
       public description :string,
       public quantity:number,
       public cost: string,
@@ -15,7 +15,7 @@ class ProductModel {
   
   class FormProductModel {
     constructor(
-      public name: string,
+      public productname: string,
       public description :string,
       public quantity:number,
       public cost: string,

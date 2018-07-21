@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { ProductFormService } from '../../services/products/product-form.service';
@@ -9,7 +9,8 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper/dist/lib/dropzone.interfaces';
 import { Router } from '@angular/router';
 import { ENV } from '../../env.config';
-
+import * as Quill from 'quill';
+declare var $: any;
 @Component({
   selector: 'app-create-products',
   templateUrl: './create-products.component.html',
@@ -18,6 +19,9 @@ import { ENV } from '../../env.config';
 export class CreateProductsComponent implements OnInit {
 
   @Input() event: ProductModel;
+  books: ProductModel[];
+  errorMessage: String;
+  productName: String;
   productForm: FormGroup;
   isEdit: boolean;
   formEvent: FormProductModel;
@@ -37,17 +41,31 @@ export class CreateProductsComponent implements OnInit {
     private fb: FormBuilder,
     public sc: ProductFormService,
     private router: Router,
-    public toastr: ToastsManager,
-    private _sectorsService: ProductsService,
+    public toastr: ToastsManager,vRef: ViewContainerRef,
+    private _productsService: ProductsService,
+   
   ) {
     this.productForm = new FormGroup({
       name: new FormControl(),
       description: new FormControl(),
       status: new FormControl()
     });
+     
+      this.toastr.setRootViewContainerRef(vRef);
   }
 
   ngOnInit() {
+    
+    const quill = new Quill('#description', {
+      modules: {
+        toolbar: {
+          container: '#toolbar-toolbar'
+        }
+      },
+      placeholder: 'Compose an epic...',
+      theme: 'snow'
+    });
+    console.log(quill);
     this.formErrors = this.sc.formErrors;
     this.isEdit = !!this.event;
     this.submitBtnText = this.isEdit ? 'Update' : 'Create';
@@ -57,7 +75,7 @@ export class CreateProductsComponent implements OnInit {
     let that = this;
     var totalsize = 0.0;
     this.config = {
-      url: ENV.BASE_API + 'product/path?token=' + this._sectorsService,
+      url: ENV.BASE_API + 'product/path?token=' + this._productsService,
       maxFiles: ENV.HELP_MAX_FILES,
       clickable: true,
       createImageThumbnails: true,
@@ -106,15 +124,8 @@ export class CreateProductsComponent implements OnInit {
       }
     };
   }
-  // private removeFile(file) {
-  //   let apiEvent = this._sectorsService.removeFile(file).subscribe(
-  //     data => {
-  //       this._handleSubmitSuccess(data);
-  //     },
-  //     err => this._handleSubmitError(err)
-  //   );
-  //   (this.apiEvents).push(apiEvent);
-  // }
+
+
 
   public onUploadSuccess(eve) {
     if ((eve[1].success !== undefined) && eve[1].success) {
@@ -134,11 +145,11 @@ export class CreateProductsComponent implements OnInit {
   }
   private _buildForm() {
     let validRules = {
-      name: [this.formEvent.name, [
+      productname: [this.formEvent.productname, [
         Validators.required
       ]],
       description: [this.formEvent.description, [
-        Validators.required
+        //Validators.required
       ]],
       quantity: [this.formEvent.quantity, [
         Validators.required
@@ -177,7 +188,7 @@ export class CreateProductsComponent implements OnInit {
       // If editing existing event, create new
       // FormEventModel from existing data
       return new FormProductModel(
-        this.event.name,
+        this.event.productname,
         this.event.description,
         this.event.quantity,
         this.event.cost,
@@ -232,13 +243,13 @@ export class CreateProductsComponent implements OnInit {
     // Convert form startDate/startTime and endDate/endTime
     // to JS dates and populate a new EventModel for submission
     return new ProductModel(
-      this.productForm.get('name').value,
-      this.productForm.get('description').value,
+      this.productForm.get('productname').value,
+      'dfs',
       this.productForm.get('quantity').value,
       this.productForm.get('cost').value,
       this.productForm.get('status').value,
-      35,
-      35,
+      1,
+      1,
       this.event ? this.event.id : null,
       this.event ? this.event.files : this.uploadFiles,
       
@@ -255,7 +266,6 @@ export class CreateProductsComponent implements OnInit {
     else {
       this.toastr.error(res.message, 'Invalid');
     }
-
   }
 
   private _handleSubmitError(err) {
@@ -267,25 +277,25 @@ export class CreateProductsComponent implements OnInit {
     this.submitting = true;
     this.submitEventObj = this._getSubmitObj();
     console.log(this.submitEventObj)
-    // if (!this.isEdit) {
+    if (!this.isEdit) {
 
-    //   this.submitEventSub = this._sectorsService
-    //     .postEvent$(this.submitEventObj)
-    //     .subscribe(
-    //       data => this._handleSubmitSuccess(data),
-    //       err => this._handleSubmitError(err)
-    //     );
+      this.submitEventSub =  this._productsService.addProductWithObservable(this.submitEventObj)
+        .subscribe(
+          data => this._handleSubmitSuccess(data),
+          err => this._handleSubmitError(err)
+        );
 
-    // // } else {
+    } 
+  
+    else {
+      this.submitEventSub = this._productsService
+        .addProductWithObservable(this.submitEventObj)
+        .subscribe(
 
-    //   this.submitEventSub = this._sectorsService
-    //     .editEvent$(this.event.id, this.submitEventObj)
-    //     .subscribe(
+          data => this._handleSubmitSuccess(data),
 
-    //       data => this._handleSubmitSuccess(data),
-
-    //       err => this._handleSubmitError(err)
-    //     );
-    // }
+          err => this._handleSubmitError(err)
+        );
+    }
   }
 }

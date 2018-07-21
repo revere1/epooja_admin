@@ -20,7 +20,7 @@
               <label for="name">Product Name
                 <span style="color:red;">*</span>
               </label>
-              <input id="name" type="text" class="form-control" formControlName="name">
+              <input id="name" type="text" class="form-control" formControlName="productname">
               <span *ngIf="formErrors.name" class="small text-danger formErrors" [innerHTML]="formErrors.name">
               </span>
             </div>
@@ -28,12 +28,58 @@
     
           <div class="row">
             <div class="col-md-6">
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="description">Product Description:</label>
-                <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> -->
+                <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> 
                 <textarea id="description" class="form-control" formControlName="description"></textarea>
                 <div *ngIf="formErrors.description" class="small text-danger formErrors" [innerHTML]="formErrors.description">
                 </div>
+              </div> -->
+              <div class="card">
+                <div class="toolbar" id="toolbar-toolbar">
+                  <span class="ql-formats">
+                    <select class="ql-font">
+                      <option selected=""></option>
+                      <option value="serif"></option>
+                      <option value="monospace"></option>
+                    </select>
+                    <select class="ql-size">
+                      <option value="small"></option>
+                      <option selected=""></option>
+                      <option value="large"></option>
+                      <option value="huge"></option>
+                    </select>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-strike"></button>
+                  </span>
+                  <span class="ql-formats">
+                    <select class="ql-color"></select>
+                    <select class="ql-background"></select>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-list" value="ordered"></button>
+                    <button class="ql-list" value="bullet"></button>
+                    <select class="ql-align">
+                      <option selected=""></option>
+                      <option value="center"></option>
+                      <option value="right"></option>
+                      <option value="justify"></option>
+                    </select>
+                  </span>
+                  <span class="ql-formats">
+                    <button class="ql-link"></button>
+                    <button class="ql-image"></button>
+                  </span>
+                </div>
+                <div id="description">
+                    <textarea id="description" class="form-control" formControlName="description"></textarea>
+                    <div *ngIf="formErrors.description" class="small text-danger formErrors" [innerHTML]="formErrors.description">
+                    </div>
+                 </div>
               </div>
             </div>
           </div>
